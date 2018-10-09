@@ -16,7 +16,7 @@ class Transform
             $items[] = self::entity($entity, $transformer);
         }
 
-        return [];
+        return $items;
     }
 
     public static function entity(Model $entity, string $entityTransformerPath): array
@@ -35,7 +35,7 @@ class Transform
             }
         }
 
-        return [];
+        return $data;
     }
 
     private static function relation($relation, string $transformer): array
