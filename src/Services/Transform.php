@@ -21,9 +21,9 @@ class Transform
 
     public static function entity(Model $entity, string $entityTransformerPath): array
     {
-        $entityTransformer = self::getTransformerInstance($entityTransformerPath);
-
         $data = [];
+
+        $entityTransformer = self::getTransformerInstance($entityTransformerPath);
 
         foreach ($entityTransformer->data($entity) as $key => $value) {
             $data[$key] = $value;
