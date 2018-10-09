@@ -51,7 +51,7 @@ class Transform
         throw new \InvalidArgumentException('Invalid Relation: ' . \get_class($relation));
     }
 
-    public static function getTransformerInstance(string $class): EntityTransformer
+    private static function getTransformerInstance(string $class): EntityTransformer
     {
         $transformer = new $class();
 
