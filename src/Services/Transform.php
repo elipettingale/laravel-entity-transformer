@@ -33,6 +33,12 @@ class Transform
             if ($entity->relationLoaded($key)) {
                 $data[$key] = self::relation($entity->$key, $relationTransformerPath);
             }
+
+            $countKey = "{$key}_count";
+
+            if ($entity->$countKey) {
+                $data[$countKey] = $entity->$countKey;
+            }
         }
 
         return $data;
