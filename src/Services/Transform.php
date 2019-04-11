@@ -8,22 +8,22 @@ use Illuminate\Support\Collection;
 
 class Transform
 {
-    public static function entities($entities, string $transformer): array
+    public function entities($entities, string $transformer): array
     {
         $items = [];
 
         foreach ($entities as $entity) {
-            $items[] = self::entity($entity, $transformer);
+            $items[] = $this->entity($entity, $transformer);
         }
 
         return $items;
     }
 
-    public static function entity(Model $entity, string $entityTransformerPath): array
+    public function entity(Model $entity, string $entityTransformerPath): array
     {
         $data = [];
 
-        $entityTransformer = self::getTransformerInstance($entityTransformerPath);
+        $entityTransformer = $this->getTransformerInstance($entityTransformerPath);
 
         foreach ($entityTransformer->data($entity) as $key => $value) {
             $data[$key] = $value;
@@ -31,7 +31,7 @@ class Transform
 
         foreach ($entityTransformer->relations() as $key => $relationTransformerPath) {
             if ($entity->relationLoaded($key)) {
-                $data[$key] = self::relation($entity->$key, $relationTransformerPath);
+                $data[$key] = $this->relation($entity->$key, $relationTransformerPath);
             }
 
             $countKey = "{$key}_count";
@@ -44,20 +44,20 @@ class Transform
         return $data;
     }
 
-    private static function relation($relation, string $transformer): array
+    private function relation($relation, string $transformer): array
     {
         if ($relation instanceof Collection) {
-            return self::entities($relation, $transformer);
+            return $this->entities($relation, $transformer);
         }
 
         if ($relation instanceof Model) {
-            return self::entity($relation, $transformer);
+            return $this->entity($relation, $transformer);
         }
 
         throw new \InvalidArgumentException('Invalid Relation: ' . \get_class($relation));
     }
 
-    private static function getTransformerInstance(string $class): EntityTransformer
+    private function getTransformerInstance(string $class): EntityTransformer
     {
         $transformer = new $class();
 
