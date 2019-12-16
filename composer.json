@@ -3,7 +3,7 @@
   "description": "A package to easily transform entities and related entities.",
   "type": "library",
   "require": {
-    "laravel/framework": "5.4.* - 6.*.*",
+    "laravel/framework": ">=5.4",
     "php": "^7.0",
     "elipettingale/case-converter": "^1.4"
   },
